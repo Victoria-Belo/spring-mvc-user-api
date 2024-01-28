@@ -1,10 +1,10 @@
-package com.api.demo.service;
+package com.api.demo_user.service;
 import java.util.List;
-import com.api.demo.model.User;
-import com.api.demo.dto.UserDTO;
+import com.api.demo_user.model.User;
+import com.api.demo_user.dto.UserDTO;
 import java.util.function.Consumer;
 import org.springframework.http.HttpStatus;
-import com.api.demo.repository.UserRepository;
+import com.api.demo_user.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,15 +28,13 @@ public class UserService implements UserInterface {
 
     @Override
     public User findById(Long userID) {
-        System.out.println(userID);
         return userRepository.findById(userID)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
     }
 
     @Override
     public User createUser(UserDTO dto) {
         try {
-            System.out.println("-> dto que chegou" + dto.toString());
             UserSecurity security = new UserSecurity();
             String hashing = security.hashingPass(dto.getPass());
             User user = new User(dto.getName(), dto.getCpf(),dto.getEmail(),hashing);
@@ -75,9 +73,8 @@ public class UserService implements UserInterface {
                 userRepository.delete(user);
                 return ResponseEntity.noContent().build();
             } else {
-                throw new EntityNotFoundException("Not found user ID " + userID);
+                throw new EntityNotFoundException("ID não encontrado " + userID);
             }
-
         } catch (Exception error) {
             throw new ErrorResponseException(HttpStatus.BAD_REQUEST, error);
         }

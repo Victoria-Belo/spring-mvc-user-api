@@ -1,4 +1,4 @@
-package com.api.demo.service;
+package com.api.demo_user.service;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class UserSecurity {
@@ -10,4 +10,5 @@ public class UserSecurity {
     public Boolean checkPassword(String pass, String hashed){
         return BCrypt.checkpw(pass, hashed);
     }
+
 }

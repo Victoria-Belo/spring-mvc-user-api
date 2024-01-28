@@ -1,7 +1,7 @@
-package com.api.demo.controller;
-import com.api.demo.dto.UserDTO;
-import com.api.demo.model.User;
-import com.api.demo.service.UserService;
+package com.api.demo_user.controller;
+import com.api.demo_user.dto.UserDTO;
+import com.api.demo_user.model.User;
+import com.api.demo_user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

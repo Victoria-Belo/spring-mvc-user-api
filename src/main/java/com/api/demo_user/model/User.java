@@ -1,4 +1,4 @@
-package com.api.demo.model;
+package com.api.demo_user.model;
 import jakarta.persistence.*;
 
 @Entity
