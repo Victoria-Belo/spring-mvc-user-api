@@ -3,7 +3,7 @@
 Demonstração de uma API de usuário com arquitetura MVC
 
 # Estrutura
-
+```
 ── demo
     ├── src
     │   └── main
@@ -18,3 +18,4 @@ Demonstração de uma API de usuário com arquitetura MVC
     │                       ├── service
     │                       └── DemoApplication
     └── pom.xml
+```
