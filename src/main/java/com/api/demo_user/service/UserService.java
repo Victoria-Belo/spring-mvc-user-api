@@ -3,18 +3,28 @@ package com.api.demo_user.service;
 import com.api.demo_user.dto.UserDTO;
 import com.api.demo_user.model.User;
 import com.api.demo_user.repository.UserRepository;
+import io.jsonwebtoken.security.Keys;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponseException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
+
+import javax.crypto.SecretKey;
+import javax.naming.AuthenticationException;
 import java.util.List;
 import java.util.function.Consumer;
 
 @Service
 public class UserService implements UserInterface {
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
     private final UserRepository userRepository;
 
@@ -73,7 +83,6 @@ public class UserService implements UserInterface {
     public ResponseEntity<Void> delete(Long userID) {
         try {
             User user = findById(userID);
-
             if (user != null) {
                 userRepository.delete(user);
                 return ResponseEntity.noContent().build();
@@ -86,13 +95,21 @@ public class UserService implements UserInterface {
     }
 
     public String login(UserDTO dto) {
+        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         try {
             User user = userRepository.findByEmail(dto.getEmail());
             if (user == null) {
                 throw new EntityNotFoundException("Email não encontrado");
             }
+            if (Boolean.TRUE.equals(userSecurity.checkPassword(dto.getPass(), user.getPass()))) {
+                return Jwts.builder()
+                        .setSubject(user.getEmail())
+                        .signWith(key)
+                        .compact();
+            }else{
+                throw new AuthenticationException("Credenciais incorretas");
 
-            return userSecurity.checkPassword(dto.getPass(), user.getPass()) ? "true" : "false";
+            }
 
         } catch (Exception error) {
             throw new ErrorResponseException(HttpStatus.BAD_REQUEST, error);

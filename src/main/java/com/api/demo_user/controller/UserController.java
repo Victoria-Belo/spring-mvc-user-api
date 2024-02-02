@@ -46,7 +46,7 @@ public class UserController {
         userService.delete(id);
     }
 
-    @PostMapping("login")
+    @PostMapping("/oauth/login")
     public String login(@RequestBody UserDTO dto){
         return userService.login(dto);
     }
