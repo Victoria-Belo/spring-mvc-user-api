@@ -1,11 +1,12 @@
 package com.api.demo_user.model;
+
 import jakarta.persistence.*;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
@@ -17,7 +18,7 @@ public class User {
     @Column
     private String pass;
 
-    public User(){}
+    public User() {}
 
     public User(String name, String cpf, String email, String pass) {
         this.name = name;
@@ -64,7 +65,7 @@ public class User {
 
     @Override
     public String toString() {
-        return  "ID=" + id +
+        return "ID=" + id +
                 ", name='" + name + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +

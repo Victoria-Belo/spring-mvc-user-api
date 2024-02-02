@@ -7,8 +7,14 @@ import java.util.List;
 
 public interface UserInterface {
     List<User> findAll();
+
     User findById(Long userID);
+
     User createUser(UserDTO dto);
+
     User update(Long userID, UserDTO dto);
+
     ResponseEntity<Void> delete(Long userID);
+
+    String login(UserDTO dto);
 }
